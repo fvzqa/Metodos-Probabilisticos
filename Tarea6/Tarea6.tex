@@ -1,0 +1,297 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=blue,
+     citecolor = blue,      
+     urlcolor=cyan,
+     }
+\usepackage{amssymb}
+\usepackage{listings}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\setlength{\parskip}{3mm}
+\title{\textsc{Pruebas estadísticas}}
+\author{\textsc{Fabiola Vázquez}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\lstlistingname}{Código}
+\floatname{algorithm}{Algoritmo}
+\begin{document}
+\maketitle
+
+\hrule
+\section{Introducción}
+El objetivo de este estudio es mostrar la realización de distintas pruebas estadísticas \cite{statisticsr} con el software R versión 4.0.2 \cite{R}. Estas pruebas se realizaron a datos extraídos de la página oficial del INEGI \cite{inegi} en un cuaderno de Jupyter \cite{jupyter}. Algunas preguntas respecto a la selección y aplicación de pruebas estadísticas se contestan en el Apéndice \ref{apendice}. 
+
+\section{Análisis}
+Se trabaja con dos conjuntos de datos, un conjunto consiste de la cantidad de mujeres por cada cien hombres, dividido por año y entidad federativa. El cuadro \ref{hm} muestra un fragmento de los datos con los que se trabaja. El otro conjunto considera los nacimientos totales por entidad federativa en los años de 2017 a 2019, un fragmento de los datos se muestra en el cuadro \ref{nacimientos}. 
+
+\subsection{Prueba de Shapiro}
+Para el uso de algunas pruebas estadísticas, es necesario saber si las muestras siguen o no una distribución normal. Para ello se utiliza la prueba de Shapiro, donde las hipótesis son las siguientes: 
+\begin{center}
+$H_0:$ La muestra tiene una distribución normal.
+
+$H_1:$ La muestra no tiene una distribución normal.
+\end{center}
+Por ejemplo, aplicando esta prueba a la cantidad de mujeres por cada cien hombres en 1990, se obtiene un valor $p$ de 0.5985. Como dicho valor es mayor que 0.05, no se rechaza la hipótesis $H_0$. Esta prueba se realiza para todos los años involucrados en los datos (ver cuadro \ref{hm}). El cuadro \ref{shapirohm} muestra los valores $p$ obtenidos, que en todos los casos son mayores a 0.05, por lo que en ninguno se rechaza la hipótesis nula. 
+
+Adicionalmente, se realiza una prueba de Shapiro a el total de nacimientos en el año 2017 por entidad federativa, obteniendo un valor $p$ de $8.086\times 10^{-5}$, por lo que se rechaza la hipótesis nula y se concluye que la muestra no tiene una distribución normal. 
+
+\begin{table}
+	\centering
+	\caption{Cantidad de mujeres por cada cien hombres.}
+	\begin{tabular}{rlrrrrrr}
+		\hline
+		& Estado & 1990 & 1995 & 2000 & 2005 & 2010 & 2015 \\ 
+		\hline
+		1 & Total & 96.50 & 97.10 & 95.40 & 94.80 & 95.40 & 94.40 \\ 
+		2 & Aguascalientes & 94.80 & 95.90 & 93.60 & 93.70 & 94.80 & 95.20 \\ 
+		3 & Baja California & 100.40 & 101.60 & 101.40 & 101.40 & 101.80 & 99.10 \\ 
+		4 & Baja California Sur & 103.80 & 103.50 & 104.10 & 104.20 & 104.40 & 101.80 \\ 
+		5 & Campeche & 100.90 & 101.10 & 99.40 & 98.00 & 98.30 & 96.20 \\ 
+		6 & Coahuila & 98.60 & 98.80 & 98.50 & 98.30 & 98.60 & 98.00 \\ 
+		\hline
+	\end{tabular}
+	\label{hm}
+\end{table}
+
+\begin{table}
+	\centering
+	\caption{Nacimientos por entidad federativa.}
+	\begin{tabular}{|p{0.012\textwidth} |p{0.1\textwidth}|p{0.1\textwidth}|p{0.1\textwidth}|p{0.1\textwidth}|p{0.1\textwidth}|p{0.1\textwidth}|p{0.1\textwidth}|}
+		\hline
+		& Estado & Total 2017 & Hombres 2017 & Mujeres 2017 & Total 2018 & Hombres 2018 & Mujeres 2018 \\ 
+		\hline
+		1 & Total & 2234039 & 1134349 & 1099674 & 2162535 & 1098674 & 1063826 \\ 
+		2 & AGS & 26955 & 13730 & 13225 & 25938 & 13074 & 12864 \\ 
+		3 & BC & 61840 & 31263 & 30576 & 60174 & 30692 & 29479 \\ 
+		4 & BCS & 12573 & 6353 & 6220 & 11917 & 6076 & 5841 \\ 
+		5 & Campeche & 17034 & 8678 & 8356 & 16247 & 8266 & 7980 \\ 
+		6 & Coahuila  & 58393 & 29618 & 28775 & 56718 & 29018 & 27700 \\ 
+		\hline
+	\end{tabular}
+	\label{nacimientos}
+\end{table}
+
+\begin{table}
+\caption{Resultado de algunas pruebas estadísticas.}
+\begin{subtable}{0.3\textwidth}
+	\centering
+	\caption{Pruebas de normalidad de Shapiro-Wilk.}
+	\begin{tabular}{lr}
+		\hline
+		Datos & Valor $p$ \\
+		\hline
+		1990 & 0.3155 \\
+		1995 & 0.9237 \\
+		2000 & 0.1590 \\
+		2005 & 0.1904 \\
+		2010 & 0.2152 \\
+		2015 & 0.9516 \\
+		\hline
+	\end{tabular}
+	\label{shapirohm}
+\end{subtable}
+\hfill
+\begin{subtable}{0.3\textwidth}
+	\centering
+	\caption{Pruebas de $t$ de Student.}
+	\begin{tabular}{lcr}
+		\hline
+		Datos & $\mu$ & Valor $p$  \\
+		\hline
+		1990 & 97.5 & 0.5985 \\
+		1995 & 97.5 & 0.1429 \\
+		2000 & 97.5 & 0.1546 \\
+		2005 & 95.5 & 0.5686 \\
+		2010 & 96.5 & 0.9596 \\
+		2015 & 95.5 & 0.8607 \\
+		\hline
+	\end{tabular}
+	\label{thm}
+\end{subtable}
+\hfill
+\begin{subtable}{0.3\textwidth}
+	\centering
+	\caption{Pruebas de Wilcoxon.}
+	\begin{tabular}{lcr}
+		\hline
+		Datos & $\mu$ &Valor $p$  \\
+		\hline
+		2017 & 62500 & 0.9923 \\
+		2018 & 62500 & 0.8848 \\
+		2019 & 62500 & 0.7352 \\ 
+		\hline
+	\end{tabular}
+	\label{wilcoxon1}
+\end{subtable}
+\end{table}
+
+\subsection{Prueba $t$ de Student}
+Es una prueba paramétrica usada para comprobar si es razonable que la media de una muestra que sigue una distribución normal es un valor $\mu$. Las hipótesis son las siguientes:
+\begin{center}
+$H_0:$ La media real es igual a $\mu$.
+
+$H_1:$ La media real no es igual a $\mu$.
+\end{center}
+Por ejemplo, se considera nuevamente el año de 1990 del cuadro \ref{hm} y se quiere comprobar si la media $\mu$ es igual a 97.5. Para esto se realiza la prueba \texttt{t.test} con dicho valor $\mu$, y se obtiene un valor $p$ igual a 0.5985 por lo que se acepta la hipótesis $H_0$. El cuadro \ref{thm} muestra el valor $\mu$ y los valores $p$ que se obtienen al aplicar la prueba a los demás años. Como los valores $p$ son siempre mayores a 0.05, se acepta la hipótesis $H_0$.
+
+
+
+\subsection{Prueba de los rangos con signo de Wilcoxon}
+La diferencia entre esta prueba y la prueba $t$ de Student reside en el hecho que en la última la muestra a la que se le aplica la prueba tiene que seguir una distribución normal, y en la prueba de Wilcoxon no necesariamente. Sin embargo, ambas sirven para verificar si la media de una muestra puede ser un valor específico $\mu$. Las hipótesis son iguales a la prueba $t$.
+
+Por ejemplo, considerando los datos del cuadro \ref{nacimientos}, se aplica la prueba a los nacimientos totales del año 2017 para verificar si tiene una media de $\mu$ igual a 62,500. En esta prueba se obtiene un valor $p$ de 0.3846, el cual es mayor que 0.05, por lo que se acepta la hipótesis $H_0$. Esta prueba se realiza a los otros dos años (2018 y 2019), los valores $p$ se muestran en el cuadro \ref{wilcoxon1}.
+
+\subsection{Para dos muestras}
+Las dos anteriores pruebas, se pueden aplicar a dos muestras diferentes. Las diferencias siguen siendo las mismas: la prueba $t$ necesita que las muestras sigan una distribución normal y la prueba de Wilcoxon no necesariamente. Las hipótesis son,
+\begin{center}
+$H_0:$ La diferencia entre las medias es igual a cero.
+
+$H_1:$ La diferencia entre las medias no es igual a cero.
+\end{center}
+
+Por ejemplo, considerando los datos del cuadro \ref{hm}, se quiere comparar las medias de los años 1990 y 1995, se realiza una prueba $t$ de Student para dos muestras y se obtiene un valor $p$ de 0.5385 por lo cual, se concluye que la diferencia entre las medias es igual a cero. 
+
+En otro ejemplo, considerando ahora, los datos del cuadro \ref{nacimientos}, se quiere comparar las medias de los nacimientos del año 2017 y 2018, realizando una prueba de Wilcoxon para dos muestras. Se obtiene un valor $p$ de 0.3846, el cual es mayor que 0.05, por lo que se concluye que la diferencia entre las medias de dichos años es igual a cero.
+
+\subsection{Prueba de Kolmogorov-Smirnov}
+Esta prueba es para verificar si dos muestras siguen la misma distribución, las hipótesis son,
+\begin{center}
+$H_0:$ $X$ y $Y$ siguen la misma distribución.
+
+$H_1:$ $X$ y $Y$ no siguen la misma distribución.
+\end{center}
+Como ejemplo, se considera los nacimientos por año y se quiere verificar si los datos del año 2017 y los del 2018 siguen la misma distribución, usando \texttt{ks.test} a dichos datos, se obtiene un valor $p$ igual a 0.9991 el cuál es mayor que 0.05, por lo que se acepta la hipótesis $H_0$.
+
+\subsection{Prueba $F$ de Fisher}
+Esta prueba sirve para verificar si dos muestras tienen la misma varianza. Las hipótesis son, 
+\begin{center}
+$H_0:$ $X$ y $Y$ tienen la misma varianza.
+
+$H_1:$ $X$ y $Y$ no tienen la misma varianza.
+\end{center}
+Como ejemplo, se consideran los nacimientos de hombres y mujeres en el año 2017 por entidad federativa y se verifica si tienen la misma varianza. Se utiliza la función \texttt{var.test} y se obtiene un valor $p$ de 0.8592, por lo cual se concluye que tienen la misma varianza.
+
+\subsection{Prueba $\chi^2$}
+El objetivo de esta prueba es verificar si dos variables categóricas son dependientes.
+Por ejemplo, consideramos la cantidad total de nacimientos por entidad federativa en el año de 2017, y el total de nacimientos de mujeres por entidad federativa en el mismo año. Al aplicar una prueba $\chi^2$ se obtiene un valor $p$ igual a 0.2373, el cual es mayor que 0.05, por lo que se concluye que las variables son dependientes. 
+
+\subsection{Correlación}
+Sirve para probar la relación lineal entre dos variables continuas. Como ejemplo, se considera los nacimientos de hombres y mujeres en el año 2018 por entidad federativa. Al aplicar la función \texttt{cor.test} se obtiene un valor $p$ igual a $2.2 \times 10^{-16}$, el cual es menor que 0.05, por lo que se concluye que no hay correlación entre las variables.
+
+
+
+
+%
+%
+%\begin{table}
+%\centering
+%\caption{Pruebas de $t$ de Student para dos muestras.}
+%\begin{tabular}{lcr}
+%\hline
+%Datos & Valor $p$  \\
+%\hline
+%1990 - 1995 & 0.5385 \\
+%1999 - 2000 & 0.1540 \\
+%\hline
+%\end{tabular}
+%\label{thm2}
+%\end{table}
+%
+%
+%
+%
+%
+%
+%\begin{table}
+%\centering
+%\caption{Pruebas de Wilcoxon para dos muestras.}
+%\begin{tabular}{lcr}
+%\hline
+%Datos & Valor $p$  \\
+%\hline
+%2017-2018 & 0.3846 \\
+%2017-2019 & 0.3374 \\
+%2018-2019 & 0.4061 \\ 
+%\hline
+%\end{tabular}
+%\label{wilcoxon2}
+%\end{table}
+
+\appendix
+\section{Preguntas} \label{apendice}
+Las siguientes son algunas preguntas frecuentes que surgen a la hora de escoger una prueba estadística, o interpretar el resultado de la misma. A su vez, se muestra en el cuadro \ref{guia} una guía sobre cómo escoger la prueba estadística adecuada a la ocasión.
+
+\begin{itemize}
+	\item \textbf{¿Cuál es la relación entre contraste de hipótesis y pruebas estadísticas?} Ambas son un procedimiento para evaluar la evidencia que los datos proporcionan para probar o rechazar una hipótesis \cite{pestad}. 
+	
+	\item \textbf{¿Qué indicaría rechazar la hipótesis nula?}  Los datos proporcionan suficiente evidencia contra la hipótesis nula $H_0$ y se considera la hipótesis alternativa $H_1$ \cite{pestad}. 
+	
+	\item \textbf{¿Cómo se interpreta la salida de una prueba estadística?} Primeramente, al diseñar un estudio, se específica un nivel de significación $\alpha$, que está entre 0 y 1, por encima del cual $H_0$ no debería rechazarse. La prueba estadística aplicada, produce un valor, denominado valor $p$ entre 0 y 1, si el valor $p<\alpha$, se rechaza la hipótesis nula y se acepta la hipótesis alternativa con un riesgo de ser errónea. En caso contrario, si el valor $p>\alpha$ no se rechaza $H_0$, pero no significa que debamos aceptarla \cite{pestad}.
+	
+	\item\textbf{¿Cómo seleccionar el alfa?} La elección del alfa depende de cuán peligroso sea rechazar $H_0$ en el caso de que sea verdadera \cite{pestad}.
+	
+	\item\textbf{¿Cuáles son los errores frecuentes de interpretación del valor p?}
+	
+	\item \textbf{¿Qué es la potencia estadística y para qué sirve?} Es la capacidad de un experimento o una prueba para conducir al rechazo de la hipótesis nula \cite{pestad}.
+	
+	\item \textbf{Ejemplos de pruebas estadísticas paramétricas y no paramétricas.} Las prueba $t$ de Student, el coeficiente de correlación de Pearson, regresión lineal, ANOVA, son ejemplos de pruebas paramétricas. Pruebas como la de $\chi^2$, coeficientes de correlación e independencia para tabulaciones cruzadas, coeficientes de correlación por rangos ordenados Spearman y Kendall \cite{ecured}.
+	\item \textbf{Resume LA GUÍA  para encontrar la prueba estadística que buscas. }
+	\begin{itemize}
+		\item Definir de forma clara el objetivo del análisis.
+		\item Identificar el tipo de variables.
+		\item Identificar si las muestras son independientes o no. 
+		\item Analizar los supuestos para verificar si se puede emplear técnicas parámetricas.
+		\item Seleccionar una prueba adecuada según el cuadro \ref{guia} \cite{guia}.
+	\end{itemize}
+	\item \textbf{¿Cuáles son los supuestos para aplicar técnicas paramétricas?} Las observaciones deben ser independientes entre sí, las poblaciones deben hacerse en poblaciones distribuidas normalmente y deben tener la misma varianza, las variables deben haberse medido por lo menos en una escala de intervalo de manera que sea posible utilizar las operaciones aritméticas \cite{ecured}.
+\end{itemize}
+
+\begin{table}
+	\centering
+	\caption{Resumen de las funciones a utilizar en R para cada tipo de prueba \cite{guia}.}
+	\begin{small}
+		\begin{tabular}{|p{0.12\textwidth} | p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+			\hline  
+			Objetivo & \texttt{Gaussiana} & \texttt{No gaussiana} & \texttt{Numéricos} & \texttt{Nominal binaria} \\ 
+			\hline 
+			Comparar 2 grupos independientes & \texttt{t.test(y}$\sim$\texttt{g)} & \texttt{wilcox.test( y}$\sim$\texttt{g)} & \texttt{yuen(y}$\sim$\texttt{g)} & \texttt{fisher.test(M)}  \texttt{chisq.test(M)} \\ 
+			\hline 
+			Comparar 2 grupos relacionados & \texttt{t.test(y}$\sim$\texttt{g, paired=T)} & \texttt{wilcox.test( y}$\sim$\texttt{g, paired=T)} & \texttt{yuen(y1}$\sim$\texttt{y2)}  & \texttt{mcnemar.test(M)}\\ 
+			\hline 
+			Comparar 3 o más grupos independientes & \texttt{aov(y}$\sim$\texttt{g) pairwise.t.test( y,g)}
+			& \texttt{kruskal.test(y}$\sim$\texttt{g)} \texttt{kruskalmc(y} $\sim$\texttt{g)} & \texttt{t1way(y}$\sim$\texttt{g) lincon(y}$\sim$\texttt{g)} & \texttt{chisq.test(M) fisher.multcomp(M)} \\ 
+			\hline 
+			Comparar 3 o más grupos relacionados &\texttt{ezANOVA(dv, wid, within) pairwise.t. test(y,x)} & \texttt{friedman.test (y}$\sim$\texttt{g|id) pairwise.wilcoxon. test(y,g)} & \texttt{rmanova(y,g, block) rmmcp(y, g, block)} & \texttt{mantelhaen.test(M)}\\ 
+			\hline 
+			Asociar 2 variables & \texttt{cor.test(x,y)}& \texttt{cor.test(x,y, metod="spearman")} & \texttt{pbcor(x,y)}  & \texttt{assocstats(M)} \\
+			\hline
+		\end{tabular} 
+		\label{guia}
+	\end{small}
+\end{table}
+
+
+\bibliographystyle{plain} 
+\bibliography{Referencias}
+
+
+\end{document} 

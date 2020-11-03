@@ -1,0 +1,247 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=blue,
+     citecolor = blue,      
+     urlcolor=cyan,
+     }
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+
+\usepackage{graphicx}
+\usepackage[inner=1.5 cm, outer = 1.5 cm, top=1 cm, bottom = 1.5 cm]{geometry}
+\setlength{\parskip}{3mm}
+\title{\textsc{Valor esperado y varianza \\ Ejercicios}}
+\author{\textsc{Fabiola Vázquez}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\lstlistingname}{Código}
+\floatname{algorithm}{Algoritmo}
+\newtheorem{ej}{Ejercicio}
+
+\begin{document}
+\maketitle
+
+\hrule
+\begin{ej}[Ej. 1, p. 247] 
+Se saca una carta al azar de una baraja que consiste de cartas numeradas del 2 al 10. Un jugador gana un dólar si el número en la carta es impar y pierde un dólar si el número es par. ¿Cuál es el valor esperado de sus ganancias?.
+\end{ej}
+\begin{proof}[Solución]
+El espacio muestral es $\Omega = \{2,3,4,5,6,7,8,9,10\}$ y se define la variable aleatoria que representa la ganancia del jugador,  
+\begin{equation}
+X(x) =
+\begin{cases}
+1, & \text{si } x \text{ es impar};\\
+-1, & \text{si } x \text{ es par}.
+\end{cases}
+\end{equation}
+En la baraja se tienen 5 cartas con número par y 4 cartas con número impar, entonces la probabilidad de obtener un par es de $\frac{5}{9}$ y de obtener un impar es de $\frac{4}{9}$. Se procede a calcular el valor esperado de $X$.
+\begin{equation}
+E(X)=\sum_{i=2}^{10} X(x)P(x) = (-1)\left(\frac{5}{9}\right) + (1)\left(\frac{4}{9}\right) = -\frac{1}{9}.
+\end{equation}
+Por lo tanto, la ganancia esperada del jugador es de $-\frac{1}{9}$.
+\end{proof}
+
+\begin{ej}[Ej. 6, p.247]
+Se lanza un dado dos veces. Sea $X$ la suma de los dos números que aparecen, y sea $Y$ la diferencia de los números (específicamente, el número que aparece primera tirada menos el número de la segunda). Demuestra que $E(XY)=E(X)E(Y).$ ¿Son $X$ e $Y$ independientes?.
+\end{ej}
+\begin{proof}[Solución] En este caso, como se trata del lanzamiento de dos dados, el espacio muestral es $\Omega = \{(1,1), \ldots , (1,6), (2,1), \ldots , (2,6), \ldots , (6,1), \ldots , (6,6)\}$, donde $|\Omega| = 36$. Se denota como $n_1$ al número que aparece en el primer tiro del dado y $n_2$ al número que aparece en el segundo tiro. $X$ es la suma de dichos números, esto es, $X=n_1 + n_2$, de manera similar, dado que $Y$ es la resta de los números, entonces $Y=n_1 - n_2$. Primero, se calcula los valores esperados de $X$ e $Y$.
+\begin{align}
+E(X) &=\sum_{(n_1,n_2) \in \Omega} \frac{1}{36} (n_1 + n_2) \\&= \frac{1}{36} \left( (1+1) + \ldots + (1+6) + \ldots (2+1) + \ldots + \ldots (6+1) + \ldots (6+6) \right)\\ &= \frac{1}{36}\left( 6(1) + \sum_{i=1}^6 i + 6(2) + \sum_{i=1}^6 i + \ldots + 6(6) + \sum_{i=1}^6 i \right)\\ &= \frac{1}{36} \left( 6 \sum_{i=1}^6 i + \sum_{i=1}^6 i\right) = \frac{1}{36}\left( 12 \sum_{i=1}^6 i \right) = \frac{1}{36} (12 \cdot 21) = 7.
+\end{align}
+
+\begin{align}
+E(Y) &= \sum_{(n_1,n_2) \in \Omega} \frac{1}{36} (n_1 - n_2) \\ &=\frac{1}{36} \left( (1-1) + \ldots + (1-6) + (2-1) + \ldots (6-1)+\ldots (6-6)\right) \\ &= \frac{1}{36} \left( 6(1) - \sum_{i=1}^6 i + 6(2) - \sum_{i=1}^6 i +\ldots 6(6) - \sum_{i=1}^6 i \right) \\ &= \frac{1}{36} \left( 6 \sum_{i=1}^6 i - 6 \sum_{i=1}^6 i \right) =0.
+\end{align}
+
+Entonces, $E(X)E(Y)=0$. Ahora, se define la variable aleatoria $XY = (n_1 + n_2)(n_1 - n_2) = n_1^2 - n_2^2$ y se procede a calcular su valor esperado.
+\begin{align}
+E(	XY) &= \sum_{(n_1,n_2) \in \Omega} \frac{1}{36} (n_1^2 - n_2^2) \\ &=\frac{1}{36} \left( (1^2-1^2) + \ldots + (1^2-6^2) + (2^2-1^2) + \ldots (6^2-1^2)+\ldots (6^2-6-^2)\right) \\ &= \frac{1}{36} \left( 6(1^2) - \sum_{i=1}^6 i^2 + 6(2^2) - \sum_{i=1}^6 i^2 +\ldots 6(6^2) - \sum_{i=1}^6 i^2 \right) \\ &= \frac{1}{36} \left( 6 \sum_{i=1}^6 i^2 - 6 \sum_{i=1}^6 i ^2\right) =0.
+\end{align}
+Por lo tanto, $E(XY)=E(X)E(Y)$.
+
+El teorema 6.4 nos dice que si dos variables son independientes, entonces $E(XY)=E(X)E(Y)$, pero si se sabe que $E(XY)=E(X)E(Y)$ no asegura que las variables sean independientes. En este caso en particular las variables nos son independientes, consideremos que $P(X=3)=\frac{2}{36}$, ya que existen dos pares ordenados $(2,1)$ y $(1,2)$ tales que $n_1+n_2 =3$, y que $P(Y=1)=\frac{5}{36}$, ya que existen cinco pares ordenados $(2,1), (3,2), (4,3), (5,4)$ y $(6,5)$ tales que $n_1 - n_2 = 1$, entonces $P(X=3)P(Y=1)=(\frac{2}{36})(\frac{5}{36})$. Pero, $P(X=3,Y=1)=\frac{1}{36}$, y como $P(X=3)P(Y=1)\neq P(X=3,Y=1)$, por lo tanto $X$ e $Y$ no son independientes.
+\end{proof}
+
+\begin{ej}[Ej. 15, p.249]
+Una caja contiene dos balones dorados y tres plateados. Se te permite tomar sucesivamente balones de la caja al azar. Ganas un dólar cada vez que tomas un balón dorado y pierdes un dólar cada vez que tomas un balón plateado. Después de tomar, el balón no es reemplazado. Demuestra que, si tomas hasta que estás por delante por un dólar o hasta que no hay más balones dorados, este es un juego favorable.
+\end{ej}
+
+\begin{proof}[Solución] El jugador estará sacando balones hasta que una de las siguientes cosas ocurra: (1) cuando no haya más balones dorados por sacar o (2) cuando su ganancia al momento sea de un dólar. Entonces, si el jugador saca un balón dorado en la primera extracción, el juego termina ya que su ganancia actual sería de un dólar, es decir ocurre (2). Siguiendo esta misma lógica, se tiene el siguiente diagrama de árbol que muestra la manera en que se jugará y las ganancias obtenidas,
+\begin{center}
+\includegraphics[scale=0.5]{diagrama.png}
+\end{center}
+denotamos $D$ a la extracción de un balón dorado y $P$ a la extracción de un balón plateado, entonces el espacio muestral está dado por $\Omega= \{ D, PDD, PDPD, PDPDP, PPDD, PPDPD, PPPDD\}$. Sea $X(n)$ la ganancia obtenida con la opción $n$, entonces
+\begin{align*}
+E(X)&= \sum_{n \in \Omega} X(n)P(n)\\
+&= 1 \cdot P(D) + 1 \cdot P(PDD)+ 0 \cdot P(PDPD) \\&\quad -1 \cdot P(PDPDP) + 0 \cdot P(PPDD) -1 \cdot P(PPDPD) \\& \quad -1 \cdot P(PPPDD) \\ &= 1 \cdot \frac{2}{5} + 1 \cdot \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{1}{3} -1 \cdot \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} \cdot 1 -1\cdot \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} \cdot 1 - 1 \cdot \frac{3}{5} \cdot \frac{2}{4} \cdot \frac{1}{3} \cdot 1\cdot 1 \\ &= \frac{2}{5} + \frac{1}{10} - \frac{1}{10} - \frac{1}{10} - \frac{1}{10} \\&= \frac{1}{5}.
+\end{align*}
+Ya que $E(X)=\frac{1}{5} > 0$, se dice que el juego es favorable.
+\end{proof}
+
+\begin{ej}[Ej.18, p.249]
+Exactamente una de seis llaves similares abre una cierta puerta. Si pruebas las llaves, una después de otra, ¿cuál es el número esperado de llaves que deberá probar antes de tener éxito?.
+\end{ej}
+\begin{proof}[Solución] Se denota por $a$ si la llave abre la puerta y por $e$ si la llave no abre la puerta, entonces el espacio muestral es $\Omega=\{a, ea, eea, eeea, eeeea, eeeeea\}$. Se define $X$ como la cantidad de intentos fallidos antes de abrir la puerta. Se calcula el valor esperado de $X$,
+
+\begin{align*}
+E(X) &= \sum_{n \in \Omega} X(n)P(X=n) \\ &= X(a)P(x=a) + X(ea)P(X=ea) + X(eea)P(X=eea) \\& \quad+ X(eeea)P(X=eeea) + X(eeeea)P(X=eeeea) + X(eeeeea)P(X=eeeeea) \\ &= 0 \cdot \frac{1}{6} + 1\cdot \frac{5}{6}\cdot\frac{1}{5} + 2\cdot\frac{5}{6}\cdot\frac{4}{5}\cdot\frac{1}{4} + 3\cdot \frac{5}{6}\cdot\frac{4}{5}\cdot\frac{3}{4}\cdot\frac{1}{3} + 4\cdot\frac{5}{6}\cdot\frac{4}{5}\cdot\frac{3}{4}\cdot\frac{2}{3}\cdot\frac{1}{2} +5\cdot\frac{5}{6}\cdot\frac{4}{5}\cdot\frac{3}{4}\cdot\frac{2}{3}\cdot\frac{1}{2}\cdot 1 \\ &= \frac{15}{6} = 2.5.
+\end{align*}
+\end{proof}
+
+\begin{ej}[Ej. 19, p.249]
+Se tiene un examen de opción múltiple. Un problema tiene cuatro posibles respuestas, y exactamente una es correcta. Se le permite al estudiante escoger un subconjunto de las cuatro posibles respuestas como su respuesta. Si escoge un conjunto que contiene la respuesta correcta, el estudiante recibe tres puntos, pero pierde un punto por cada respuesta incorrecta en el subconjunto escogido. Demuestra que si solo adivina un subconjunto de manera uniforme y aleatoria, su puntuación esperada es cero.
+\end{ej}
+
+\begin{proof}[Solución] 
+El examen tiene cuatro posibles respuestas, digamos $a,b,c,d$, entonces el espacio muestral es $\Omega = \{\emptyset, \{a\}, \{b\},\{c\}, \{d\}, \{a,b\}, \{a,c\}, \{a,d\}, \{b,c\}, \{b,d\}, \{c,d\}, \{a,b,c\}, \{a,b,d\}, \{b,c,d\}, \{c,d,a\},$ $\{a,b,c,d\}\}$. Sea $X(n)$ el puntaje obtenido con la opción $n$, los valores posibles de $X(n)$ son $\{-3,-2,-1,0,$ $1,2,3\}$.
+
+Se puede elegir un subconjunto de 16 posibles,  como se hace de manera uniforme y aleatoria, cada uno de los subconjuntos tiene una probabilidad de ser elegido de $\frac{1}{16}$. El estudiante recibe un puntaje de 0 cuando elige todas las respuestas o no elige ninguna de estas, es decir $P(X=0)=\frac{2}{16}$.
+
+Se tienen cuatro subconjuntos de cardinalidad tres, si elige uno de estos puede obtener 1, si la respuesta correcta está en el subconjunto, o -3 si la respuesta no está. Cada una de las opciones aparece exactamente en tres de estos cuatro subconjuntos, entonces la $P(X=1)=\frac{3}{16}$ y $P(X=-3)=\frac{1}{16}$.
+
+En otro caso, se tienen seis subconjuntos de cardinalidad dos, si elige uno de estos puede obtener 2, si la respuesta correcta está en el subconjunto, o -2 si no está. Cada opción aparece exactamente en tres de estos seis subconjuntos, entonces $P(X=2)=P(X=-2)=\frac{3}{16}$.
+
+Por último, si elige una sola respuesta, puede obtener 3 si es la correcta o -1 si es la incorrecta, es decir $P(X=3)=\frac{1}{16}$ y $P(-1)=\frac{3}{16}$. Entonces, el valor esperado se calcula como,
+
+\begin{align}
+E(X) &= \sum_{i=-3}^3 X(n)P(X=n) \\ &= -3 \cdot \frac{1}{16} -2 \cdot \frac{3}{16} -1\cdot\frac{3}{16} + 0 \cdot\frac{2}{16} + 1\cdot \frac{3}{16} + 2 \cdot \frac{3}{16} + 3\cdot\frac{1}{16} \\ &= \frac{1}{16} (-3-6-3+0+1+6+3) \\ &=0.
+\end{align}
+\end{proof}
+
+\begin{ej}[Ej. 31, p.254] 
+Un gran número, $N$, de personas están sujetos a una prueba de sangre. Esta puede ser administrada en dos maneras: (1) Se le realiza la prueba a cada persona por separado, en este caso se necesitan $N$ pruebas, (2) la muestra de sangre de $k$ personas puede ser juntada y analizada junta. Si esta prueba es negativa, esa prueba es suficiente para las $k$ personas. Si esta prueba es positiva, cada una de las $k$ personas deben ser sometidas a una prueba por separado, y en este caso, $k+1$ pruebas son requeridas para las $k$ personas. Asume que la probabilidad de que la prueba sea positiva es $p$ y es la misma para todas las personas y los eventos son independientes. 
+\begin{enumerate}
+\item[a)] Encuentra la probabilidad de que la prueba para una muestra juntada de $k$ personas sea positiva. 
+\item[b)] ¿Cuál es el valor esperado del número $X$ de pruebas necesarias bajo el plan (2)? (Asume que $N$ es divisible por $k$).
+\item[c)] Para un $p$ pequeño, demuestra que el valor de $k$ que minimizará el valor esperado de muestras bajo el segundo plan es aproximadamente $\frac{1}{\sqrt{p}}$.
+\end{enumerate}
+\end{ej}
+\begin{proof}[Solución]
+(a) Se tiene un grupo de $k$ personas, cada una de ellas tiene probabilidad $p$ de salir positiva en la prueba, entonces la probabilidad de la prueba de la muestra juntada sea positiva es de $kp.$ 
+
+(b) Se ocupa una sola prueba si la prueba juntada sale negativa y se ocupan $k+1$ pruebas si la prueba juntada da positivo y se tienen $\frac{N}{k}$ grupos de $k$ personas. Sea $X$ la cantidad de pruebas requeridas, se calcula $E(X)$,
+\begin{align}
+E(X) &= \frac{N}{k} \left( 1 \cdot P(X=\text{La prueba da negativo}) + (k+1)\cdot P(X=\text{La prueba da positivo})\right) \\ & = \frac{N}{k} (1 \cdot (1-kp) + (k+1) \cdot kp) \\ &= \frac{N}{k}(1-kp + k^2p + kp) \\ &= \frac{N}{k} (1+k^2p) \\&= \frac{N}{k} + Npk. 
+\end{align}
+
+(c) Se define $f(k)=\frac{N}{k} + Npk$, se busca el valor $k$ que minimice la función $f$, para esto se deriva la función,
+\begin{align}
+f(k)&=\frac{N}{k} + Npk \\ f'(k) &=-\frac{N}{k^2} + Np.
+\end{align}
+Se hace $f'(k)=0$ para encontrar algún valor crítico, 
+\begin{align}
+f'(k)&=0 \\ -\frac{N}{k^2} + Np &=0 \\ \frac{N}{k^2} &= Np \\ \frac{1}{k^2} &= p \\ k^2 &= \frac{1}{p} \\ k&= \frac{1}{\sqrt{p}} \qquad \text{ya que p}>0
+\end{align}
+Como $f''(k)=\frac{2N}{k^3} > 0$, entonces $\frac{1}{\sqrt{p}}$ minimiza la función $f(k).$
+\end{proof}
+
+\begin{ej}[Ej. 1, p.263]
+Un número es escogido al azar del conjunto $S=\{-1,0,1\}$. Sea $X$ el número elegido. Encuentra el valor esperado, la varianza y la desviación estándar de $X$.
+\end{ej}
+\begin{proof}[Solución]
+La probabilidad de que se escoja uno de los tres números del conjunto $S$ es $\frac{1}{3}$, para cada uno. Se calcula el valor esperado de $X$,
+\begin{align}
+E(X) &= \sum_{x \in S} X\cdot P(X=x) \\ &= -1 \cdot \frac{1}{3} + 0\cdot \frac{1}{3} + 1 \cdot\frac{1}{3} \\ &=0.
+\end{align}
+Ya que se tiene el valor de $E(X)$, se calcula el valor de $V(X)$,
+\begin{align}
+V(X) &= E((X-E(X))^2) \\ &= \sum_{x \in S} (x-E(X))^2 \cdot P(X=x) \\&= (-1-0)^2\cdot\frac{1}{3} + (0-0)^2\cdot\frac{1}{3} + (1+0)^2\cdot \frac{1}{3} \\ &= 1\cdot \frac{1}{3} + 0\cdot \frac{1}{3} + 1\cdot \frac{1}{3} \\ &=\frac{2}{3}.
+\end{align}
+
+Como $D(X) = \sqrt{V(X)}$, entonces $D(X)=\sqrt{\frac{2}{3}}$.
+\end{proof}
+
+\begin{ej}[Ej. 12, p.264]
+Sea $X$ una variable aleatoria con $\mu = E(X)$ y $\sigma^2 = V(X).$ Sea $X^* = \frac{X-\mu}{\sigma}$. Demuestra que $X^*$ tiene valor esperado 0 y varianza 1. 
+\end{ej}
+\begin{proof}[Solución]
+\begin{align}
+E(X^*) &= E\left(\frac{X-\mu}{\sigma}\right) \\ &= \frac{1}{\sigma} E(X - \mu) \qquad \quad\text{Por el \textbf{teorema 6.2 }\cite{snell}} \\&= \frac{1}{\sigma} (E(X) - \mu) \qquad \text{Por el \textbf{teorema 6.2} \cite{snell}} \\ &= \frac{1}{\sigma}(\mu - \mu) = \frac{1}{\sigma} (0) = 0.
+\end{align}
+
+\begin{align}
+V(X^*)&=E((X^* - E(X^*)^2)) \\ &= E((X^*)^2) \\ &= E\left(\left( \frac{X-\mu}{\sigma} \right)^2\right) \\ &= \frac{1}{\sigma^2} \left(E\left(\left(X-\mu\right)^2\right)\right) \\ &= \frac{1}{\sigma^{2}} \left(\sigma^{2}\right) \\ &=1.
+\end{align}
+\end{proof}
+
+\begin{ej}[Ej. 9, p.264]
+Se considera un dado cargado de tal manera que la probabilidad de que salga una cara es proporcional al número que aparece. Sea $X$ el número que aparece. Encuentra $V(X)$ y $D(X)$.
+\end{ej}
+\begin{proof}[Solución]
+Se considera un dado con seis caras, dado que la suma de las seis caras es  $1+2+\dots+6 = 21$, se toma entonces que la  $P(X = n) = \frac{n}{21}$. Calculando el esperado, 
+	\begin{align}
+		E(X) &= \sum_{n= 1}^{6} n \cdot P(X = n)\\
+		&= \sum_{n = 1}^{6} n \cdot \frac{n}{21}\\
+		&= \frac{1}{21} \cdot \sum_{n = 1}^{6} n^2 \\
+		&= \frac{1}{21} \cdot \frac{6 \cdot 7 \cdot 13}{6}\\
+		&= \frac{1}{21} \cdot  (91) \\
+		&= \frac{13}{3} \approx 4.333.
+	\end{align}
+Teniendo $E(X)$, se calcula la varianza,
+	\begin{align}
+		V(X) &= \sum_{n = 1}^{6} \left\lbrack \left(n-\frac{13}{3}\right)^2 \cdot \frac{n}{21} \right\rbrack\\
+		&= \sum_{n = 1}^{6} \left\lbrack \left(n^2 - 2n\cdot\frac{13}{3}+ \left(\frac{13}{3}\right)^2\right) \left(\frac{n}{21}\right) \right\rbrack\\
+		&= \sum_{n = 1}^{6} \left\lbrack \frac{n^3}{21} - 2 \left(\frac{13}{3 \cdot 21}\right) n^2 + \left(\frac{13}{3}\right)^2 \frac{n}{21} \right\rbrack \\
+		&= \frac{1}{21} \sum_{n = 1}^{6}  n^3 - 2 \left(\frac{13}{3 \cdot 21}\right) \sum_{n= 1}^{6} n^2 + \frac{1}{21}\left(\frac{13}{3}\right)^2 \sum_{n = 1}^{6} n \\
+		&= \frac{1}{21} \left(\frac{36 \cdot 49}{4}\right) - \frac{2 \cdot 13}{3 \cdot 21} (91) + \frac{1}{21} \left(\frac{13}{3}\right)^2 (21)\\
+		&= 9 \cdot \frac{7}{3} - 2 \cdot \left(\frac{13}{3}\right)^2 + \left(\frac{13}{3}\right)^2 = \frac{20}{9}\approx 2.222.
+	\end{align}
+	entonces la desviació estándar de $X$, es $D(X) = \sqrt{V(X)} = \sqrt{\frac{20}{9}} = \frac{\sqrt{20}}{3} \approx 1.49$.
+\end{proof}
+\bibliographystyle{plain} 
+\bibliography{ref}
+
+
+\end{document} 

@@ -1,0 +1,490 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=blue,
+     citecolor = blue,      
+     urlcolor=cyan,
+     }
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+
+\newcommand\var[1]{\, \mathrm{Var}\lbrack #1 \rbrack}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \lbrack #1 \rbrack}
+
+\newcommand\esp[1]{\, \mathbb{E} \lbrack #1 \rbrack}
+\newcommand\integral[4]{\ensuremath{\int_{#1}^{#2} #3 \, d#4}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=R,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+
+\usepackage{graphicx}
+\usepackage[inner=1.5 cm, outer = 1.5 cm, top=1 cm, bottom = 1.5 cm]{geometry}
+\setlength{\parskip}{3mm}
+\title{\textsc{Funciones generadoras \\ Ejercicios}}
+\author{\textsc{Fabiola Vázquez}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\lstlistingname}{Código}
+\floatname{algorithm}{Algoritmo}
+\newtheorem{ej}{Ejercicio}
+\newtheorem{defi}{Definición}
+\newtheorem{teo}{Teorema}
+
+
+
+\begin{document}
+\maketitle
+\hrule 
+\begin{ej}[Ej. 1, pág. 392]
+$Z_1, Z_2, \ldots, Z_n$ describen un proceso en el que cada padre tiene descendencia con probabilidad $p_j$. Encuentra la probabilidad $d$ de que el proceso termine si
+\begin{itemize}
+\item[(a)] $p_0 = \frac{1}{2}, p_1 = \frac{1}{4}, p_2 = \frac{1}{4}.$
+\item[(b)] $p_0 = \frac{1}{3}, p_1 = \frac{1}{3}, p_2 = \frac{1}{3}.$
+\item[(c)] $p_0 = \frac{1}{3}, p_1 = 0, p_2 = \frac{2}{3}.$
+\item[(d)] $p_j = \frac{1}{2^{j+1}}$, para $j = 0, 1, 2, \ldots$.
+\item[(e)] $p_j = \left(\frac{1}{3}\right)\left(\frac{2}{3}\right)^j$, para $j = 0, 1, 2, \ldots$.
+\item[(f)] $p_j = e^{-2}\left(\frac{2^j}{j!}\right)$, para $j = 0, 1, 2, \ldots$.
+\end{itemize}
+\end{ej}
+\begin{proof}[Solución]
+
+\textbf{(a)} Se calcula la media de la descendencia, 
+\begin{equation}
+m= \frac{1}{4} + 2\left(\frac{1}{4}\right) = \frac{3}{4}.
+\end{equation}
+Como $m<1$ por el teorema 10.2 \cite{snell}, el proceso termina con probabilidad $d=1$.
+
+\textbf{(b)} Se calcula la media de la descendencia, 
+\begin{equation}
+m= \frac{1}{3} + 2\left(\frac{1}{3}\right) = \frac{3}{3} = 1.
+\end{equation}
+Como $m=1$ por el teorema 10.2 \cite{snell}, el proceso termina con probabilidad $d=1$.
+
+\textbf{(c)} Se calcula la media de la descendencia, 
+\begin{equation}
+m= 0 + 2\left(\frac{2}{3}\right) = \frac{4}{3}.
+\end{equation}
+Como $m>1$, se considera la ecuación $h(z) = z$ y se encuentran las raíces,
+\begin{align}
+h(z) &= z \\
+p_0 + p_1 z + p_2 z^2 + \ldots &= z \\
+\frac{1}{3} + 0\cdot z + \frac{2}{3} \cdot z^2 &= z \\
+\frac{1}{3} + \frac{2}{3} \cdot z^2 - z &= 0\\
+1 + 2z^2 -3z &=0 \\
+(2z -1)(z - 1) &=0
+\end{align}
+Entonces, las raíces de la ecuación son $z=\frac{1}{2}$ y $z=1$, donde $d$ es la menor de las raíces de $h(z)=z$, por lo tanto $d=\frac{1}{2}$.
+
+\textbf{(d)} Se calcula la media de la descendencia, 
+\begin{align}
+m &= \sum_{j=0}^{\infty} \frac{j}{2^{j+1}} \\
+&= \sum_{j=1}^{\infty} \frac{(j-1)}{2^j} =  \sum_{j=1}^{\infty} \frac{j}{2^j} - \sum_{j=1}^{\infty} \frac{1}{2^j} \\
+&= \frac{\frac{1}{2}}{\left(1 - \frac{1}{2}\right)^2} - \frac{\frac{1}{2}}{1-\frac{1}{2}} \\
+&= \frac{\frac{1}{2}}{\left(\frac{1}{2}\right)^2} - \frac{\frac{1}{2}}{\frac{1}{2}} = \frac{1}{\frac{1}{2}} - 1 = 2 - 1 = 1.
+\end{align}
+Dado que $m=1$, se concluye que $d=1.$
+
+\textbf{(e)} Se calcula el valor de $m$,
+\begin{align}
+m &= \sum_{j=0}^{\infty} \frac{j}{3}  \left(\frac{2}{3}\right)^j \\
+&= \frac{1}{3} \cdot \frac{\frac{2}{3}}{\left(1-\frac{2}{3}\right)^2} = \frac{1}{3} \cdot \frac{\frac{2}{3}}{\frac{1}{9}} = \frac{1}{3} \cdot 6 = 2.
+\end{align}
+Como $m > 1$, se considera la ecuación $h(z)=z$ y se buscan sus raíces,
+\begin{align}
+h(z) &= z \\
+p_0 + p_1 \cdot z + p_2 \cdot z^2 + \ldots &= z \\
+\sum_{j=0}^{\infty} \left(\frac{1}{3}\right) \left(\frac{2}{3}\right)^j \cdot z^j &=z.
+\end{align}
+Como $|z|<1$, entonces $|\frac{2}{3}z| < 1$ y 
+\begin{align}
+\left(\frac{1}{3}\right) \sum_{j=0}^{\infty} \left(\frac{2}{3}\right)^j \cdot z^j &=z \\
+\left(\frac{1}{3}\right) \cdot \frac{1}{1 - \frac{2}{3}z} &=z \\
+\frac{1}{3} \cdot \frac{1}{\frac{3-2z}{3}} &=z \\
+\frac{1}{3-2z} &=z \\
+2z^2 -3z +1 &=0 \\
+(2z-1)(z-1)&=0,
+\end{align}
+por lo que las raíces de la ecuación $h(z)=z$ son $z_1=0$ y $z_2=\frac{1}{2}$, por lo tanto $d=\frac{1}{2}$.
+
+\textbf{(f)} Se calcula el valor de $m$,
+\begin{align}
+m &= \sum_{j=0}^{\infty} \frac{e^{-2}2^j}{j!}\cdot j \\
+&= e^{-2} \sum_{j=0}^{\infty} \frac{2^j}{j!} \cdot j.
+\end{align}
+Dado que el primer término de la suma es igual a cero, 
+\begin{align}
+m &= e^{-2} \sum_{j=1}^{\infty} \frac{2^j}{j!} \cdot j \\
+&= e^{-2} \sum_{j=1}^{\infty} \frac{2^j}{(j-1)!} = e^{-2} \sum^{\infty}_{j=1} \frac{2\cdot2^{j-1}}{(j-1)!} \\
+&= 2e^{-2} \sum^{\infty}_{j=1} \frac{2^{j-1}}{(j-1)!} \\
+&= 2e^{-2} \sum^{\infty}_{j=0} \frac{2^{j}}{j!} \\
+&= 2e^{-2}e^{2} = 2.
+\end{align}
+Como $m>1$, se considera $h(z) = z$ y se buscan sus raíces,
+\begin{align}
+h(z) &= z \\
+p_0 + p_1 \cdot z + p_2 \cdot z^2 + \ldots &= z \\
+\sum_{j=0}^{\infty} \frac{e^{-2}2^j}{j!}\cdot z^j &= z \\
+e^{-2} \sum_{j=0}^{\infty} \frac{(2z)^j}{j!} &= z \\
+e^{-2}\cdot e^{2z} &= z\\
+e^{2z-2} &=z.
+\end{align}
+Calculando las raíces de la ecuación por medio de Wolfram Alpha \cite{Wolfram|Alpha}, tenemos que $z_1=1$ y $z_2 \approx 0.2$, por lo tanto $d \approx 0.2$.
+\end{proof}
+
+\begin{ej}[Ej. 3, pág. 392]
+En el problema de la carta en cadena, encuentra la ganancia esperada si
+\begin{enumerate}
+\item[(a)] $p_0 = \frac{1}{2}, p_1 = 0$ y $p_2 = \frac{1}{2}$.
+\item[(b)] $p_0 = \frac{1}{6}, p_1 = \frac{1}{2}$ y $p_2 = \frac{1}{3}$.
+\end{enumerate}
+Demuestra que si $p_0 > \frac{1}{2},$ no puedes esperar ganancias.
+\end{ej}
+\begin{proof}[Solución]
+En el ejemplo 10.14, se menciona que la ganancia esperada viene dada por,
+\begin{equation}
+\label{ganancia}
+50m + 50m^{12} - 100,
+\end{equation} 
+donde $m = 0 \cdot p_0 +1\cdot p_1 + 2 \cdot p_2$. Para que la  ganancia sea favorable, se debe tener que 
+\begin{equation}
+m+m^{12} > 2.
+\end{equation}
+Lo cual es cierto si y solo si $m>1$, es decir, si
+\begin{align}
+p_1 + 2p_2 > 1.
+\end{align}
+Recordando que $p_0 + p_1 + p_2 = 1$, entonces $p_1 = 1-p_0 - p_2$, sustituyendo resulta,
+\begin{align}
+1-p_0 -p_2 + 2p_2 &>1 \\
+p_2 - p_0 &>0 \\
+p_2 &>p_0.
+\end{align}
+Si $p_0 = \frac{1}{2}$, el valor más grande que puede tomar $p_2$ es $\frac{1}{2}$ (si se hace $p_1 =0$), pero no cumpliría que $p_2 > p_0$, por lo que no sería un valor favorable. Por lo tanto si $p_0 = \frac{1}{2}$, no se puede esperar una ganancia.
+
+\textbf{(a)} Se calcula el valor de $m$ como
+\begin{align}
+m = 0\cdot \frac{1}{2} + 1\cdot 0 + 2\cdot\frac{1}{2}= 1, 
+\end{align}
+por la ecuación \ref{ganancia}, se tiene que la ganancia esperada es $50(1)+50(1^{12})-100 = 0$.
+
+\textbf{(b)} De forma similar que en el inciso anterior, se tiene el valor de $m$,
+\begin{equation}
+m = 0 \cdot \frac{1}{6} + 1 \cdot \frac{1}{2} + 2\cdot \frac{1}{3} = \frac{7}{6},
+\end{equation}
+por lo tanto la ganancia esperada es $50\left(\frac{7}{6}\right)+50\left(\left(\frac{7}{6}\right)^{12}\right)-100 \approx 276.26$.
+\end{proof}
+
+\begin{ej}[Ej. 1, pág. 401]
+Sea $X$ una variable aleatoria continua con valores en $[0,2]$ y densidad $f_{X}$. Encuentra la función generadora de momentos $g(t)$ de $X$ si
+\begin{enumerate}
+\item[(a)] $f_{X} = \frac{1}{2}$.
+\item[(b)] $f_{X} = \frac{1}{2}x$.
+\item[(c)] $f_{X} = 1 - \frac{1}{2}x$.
+\item[(d)] $f_{X} = |1-x|$.
+\item[(e)] $f_{X} = \frac{3}{8}x^{2}.$
+\end{enumerate}
+\end{ej}
+
+\begin{proof}[Solución]
+La función generadora de momentos $g(t)$ de $X$  se define \cite{snell} como
+\begin{equation}
+g(t) = \int_{-\infty}^{\infty}e^{tx} f_{X}(x) dx.
+\end{equation}
+
+\textbf{(a)} Calculamos $g(t)$,
+\begin{align}
+g(t) &= \int_{0}^{2} e^{tx} \cdot \frac{1}{2} dx \\
+&= \frac{1}{2} \int_{0}^{2} e^{tx} dx \\
+&= \frac{1}{2} \left( \frac{e^{tx}}{t} \, \,\Big\lvert^{2}_{0}\right) = \frac{1}{2} \left( \frac{e^{2t}}{t} - \frac{e^{0t}}{t} \right) = \frac{1}{2} \left( \frac{e^{2t}}{t} - \frac{1}{t}\right) \\ 
+&= \frac{1}{2} \cdot \frac{e^{2t}-1}{t} = \frac{e^{2t}-1}{2t}.
+\end{align}
+Por lo tanto si $f_X = \frac{1}{2}$, su función generadora de momentos es $g(t)=\frac{e^{2t}-1}{2t}$.
+
+\textbf{(b)} Se calcula $g(t)$,
+\begin{align}
+g(t) &= \int_{0}^{2} e^{tx} \cdot \frac{1}{2} x dx = \frac{1}{2}\int_{0}^{2} xe^{tx}dx, 
+\end{align}
+se hace una integración por partes, haciendo $u=x$ y $dv=e^{tx}dx$, entonces,
+\begin{align}
+g(t) &= \frac{1}{2} \left( \frac{xe^{tx}}{t}\,\,\Big\lvert ^{2}_{0} - \int^{2}_{0} \frac{e^{tx}}{t}dx\right) \\
+&= \frac{1}{2} \left( \left(\frac{xe^{tx}}{t} - \frac{e^{tx}}{t^{2}} \right)\Big\lvert ^{2}_{0} \right) \\
+&= \frac{1}{2} \left( \frac{2e^{2t}}{t} - \frac{e^{2t}}{t^{2}} - \frac{0e^{0t}}{t} + \frac{e^{0t}}{t^2}\right) \\ 
+&= \frac{e^{2t}}{t} + \frac{1}{2t^2} - \frac{e^{2t}}{2t^2}.
+\end{align}
+Por lo tanto, si $f_{X} = \frac{1}{2}x$, su función generadora de momentos es $g(t) = \frac{e^{2t}}{t} + \frac{1}{2t^2} - \frac{e^{2t}}{2t^2}.$
+
+\textbf{(c)} Se calcula la función $g(t)$,
+\begin{align}
+g(t) &= \int^{2}_{0} e^{tx} \left(1-\frac{1}{2}x\right)dx = \underbrace{\int^{2}_{0} e^{tx}dx}_{(1)} - \underbrace{\frac{1}{2} \int^{2}_{0} xe^{tx}dx}_{(2)}.
+\end{align}
+En el inciso \textbf{(a)} se calculó el valor de la integral (1) y en el inciso \textbf{(b)} se calculó la integral (2), por tanto
+\begin{align}
+g(t) &= \frac{e^{tx}}{t} \Big\lvert^{2}_{0} - \left(\frac{e^{2t}}{t} + \frac{1}{2t^2} - \frac{e^{2t}}{2t^2}\right) \\
+& = \frac{e^{2t}}{t} - \frac{1}{t} - \frac{e^{2t}}{t} - \frac{1}{2t^2} + \frac{e^{2t}}{2t^2} \\
+&= \frac{e^{2t}}{t^{2}} - \frac{1}{2t^2} - \frac{1}{t}.
+\end{align}
+Por lo tanto, si $f_{X}=1-\frac{1}{2}x$, entonces su función generadora de momentos es $g(t) = \frac{e^{2t}}{t^{2}} - \frac{1}{2t^2} - \frac{1}{t}.$
+
+\textbf{(d)} Se calcula la función generadora de momentos $g(t)$,
+\begin{align}
+g(t) &= \int^{2}_{0} e^{tx} |1-x| dx,
+\end{align}
+donde la función $|1-x|$, se define como 
+\begin{equation}
+|1-x|= \left\{ \begin{array}{lcc}
+             1-x &   \text{si}  & 1 \geqslant x, \\
+             \\ x-1 &  \text{si} & x > 1. 
+             \end{array}
+   \right.
+\end{equation}
+Entonces,
+\begin{align}
+g(t) &= \int^{1}_{0} e^{tx}(1-x)dx + \int^{2}_{1} e^{tx}(x-1)dx \\
+&= \int^{1}_0 e^{tx}dx - \int^{1}_{0} xe^{tx}dx + \int^{2}_{1}xe^{tx}dx - \int^{2}_{1}e^{tx}dx \\
+&= \frac{e^{tx}}{t} \Big\lvert^{1}_{0} - \left(\frac{xe^{tx}}{t} - \frac{e^{tx}}{t^2} \Big\lvert^{1}_{0} \right) + \left(\frac{xe^{tx}}{t} - \frac{e^{tx}}{t^2} \Big\lvert^{2}_{1} \right) - \frac{e^{tx}}{t} \Big\lvert^2_0 \\
+&= \frac{2e^{t}}{t^2} + \frac{e^{2t}}{t} - \frac{e^{2t}}{t^2} - \frac{1}{t^2} - \frac{1}{t}.
+\end{align}
+
+\textbf{(e)} Se calcula la función generadora de momentos $g(t)$,
+\begin{align}
+g(t) &= \integral{0}{2}{e^{tx} \frac{3}{8} x^2}{x} \\ 
+&= \frac{3}{8} \underbrace{\integral{0}{2}{x^2 e^{tx}}{x}}_{(3)}.
+\end{align}
+La integral (3) se resuelve por partes, haciendo $u=x^2$ y $dv=e^{tx}dx$, queda
+\begin{align}
+g(t) &= \frac{x^2e^{tx}}{t} \Big\lvert^{2}_{0} - \underbrace{\frac{2}{t} \integral{0}{2}{xe^{tx}}{x}}_{(4)}.
+\end{align}
+Nuevamente, la integral (4) se resuelve por partes, haciendo $u=x$ y $dv=e^{tx}dx$, resulta
+\begin{align}
+g(t) &= \frac{x^2e^{tx}}{t} \Big\lvert^{2}_{0} - \frac{2}{t}\left(\frac{xe^{tx}}{t} \Big\lvert^{2}_{0}- \frac{1}{t} \integral{0}{2}{e^{tx}}{x}\right) \\
+&= \frac{x^2e^{tx}}{t} \Big\lvert^{2}_{0} - \frac{2}{t}\left(\frac{xe^{tx}}{t} \Big\lvert^{2}_{0}- \frac{e^{tx}}{t^2} \Big\lvert^{2}_{0}  \right) \\
+&= \frac{3e^{2t}}{2t} - \frac{3e^{2t}}{2t^2} + \frac{3e^{2t}}{4t^3} - \frac{3}{4t^3}.
+\end{align}
+\end{proof}
+
+\begin{ej}[Ej. 6, pág. 402]
+Sea $X$ una variable aleatoria continua con función característica $k_{X}(\tau)=e^{-|\tau|}, -\infty < \tau < \infty$. Demuestra que la función de densidad de $X$ es $f_{X}(x)=\frac{1}{\pi(1-x^2)}$.
+\end{ej}
+\begin{proof}[Solución]
+Dada la función $k_{X}(\tau)$ se puede obtener la función de densidad de $X$ \cite{snell} con
+\begin{equation}
+f_{X}(x) = \frac{1}{2\pi}\integral{-\infty}{\infty}{e^{-i\tau x}k_{X}(\tau)}{\tau}.
+\end{equation}
+Entonces, sustituyendo la función $k_{X}(\tau)$, se tiene
+\begin{equation}
+\label{int}
+f_{X}(x) = \frac{1}{2\pi} \integral{-\infty}{\infty}{e^{-i\tau x} \cdot e^{-|\tau|}}{\tau}.
+\end{equation}
+Se sabe que $e^{ix}=\cos x + i \sen x$, entonces $e^{i(-\tau x)}=\cos(-\tau x) + i \sen (-\tau x)$ y como la función $\cos(x)$ es una función par, entonces $\cos (-x) = \cos (x)$. La función $\sen(x)$ es una función impar, entonces $\sen(-x)=-\sen(x)$. Entonces $e^{i(-\tau x)} = \cos(\tau x) - i\sen(\tau x)$, sustituyendo en la ecuación \ref{int} se tiene que
+\begin{align}
+f_{X}(x) &=\frac{1}{2\pi} \integral{-\infty}{\infty}{ (\cos (\tau x) - i\sen (\tau x))e^{-|	\tau|}}{\tau} \\
+&=\frac{1}{2	\pi}\left[ \integral{-\infty}{\infty}{ \cos (\tau x) e^{-|\tau|}}{\tau} - i \integral{-\infty}{\infty}{ \sen (\tau x) e^{-|\tau|}}{\tau}\right].
+\end{align}
+La función $e^{-|\tau|}$, se define como
+\begin{equation}
+e^{-|\tau|}= \left\{ \begin{array}{lcc}
+             e^{\tau} &   \text{si}  & \tau \geqslant 0, \\
+             \\ e^{-\tau} &  \text{si} & \tau < 0. 
+             \end{array}
+   \right.
+\end{equation}
+Entonces,
+\begin{align}
+f_{X}(x) &= \frac{1}{2\pi}\left[\integral{-\infty}{0}{e^{-\tau}\cos(\tau x)}{\tau} + \integral{0}{\infty}{e^{\tau}\cos(\tau x)}{\tau} - i\integral{-\infty}{0}{e^{-\tau}\sen(\tau x)}{\tau} -i \integral{0}{\infty}{e^{\tau}\sen(\tau x)}{\tau}\right].
+\end{align}
+Como la función coseno es una función par, se tiene
+\begin{align}
+\integral{-\infty}{0}{e^{-\tau}\cos(\tau x)}{\tau} & = \integral{0}{\infty}{e^{-(-\tau)}\cos(-\tau x)}{\tau} \\
+&= \integral{0}{\infty}{e^{\tau}\cos(\tau x)}{\tau}.
+\end{align}
+
+Ya que la función seno es una función impar, se tiene
+\begin{align}
+\integral{-\infty}{0}{e^{-\tau}\sen(\tau x)}{\tau} & = \integral{0}{\infty}{e^{-(-\tau)}\sen(-\tau x)}{\tau} \\
+&= -\integral{0}{\infty}{e^{\tau}\sen(\tau x)}{\tau}.
+\end{align}
+
+Sustituyendo, 
+\begin{align}
+f_{X}(x) &=\frac{1}{2\pi} \left(2 \integral{0}{\infty}{e^{\tau}\cos(\tau x)}{\tau}\right) \\
+&= \frac{1}{\pi}  \integral{0}{\infty}{e^{\tau}\cos(\tau x)}{\tau}. \label{int2}
+\end{align}
+La integral se resuelve por partes haciendo $u=\cos \tau x$ y $dv = e^{\tau}d\tau$, entonces $du=-x\sin \tau x$ y $v=e^\tau$, por lo que 
+\begin{align}
+\integral{}{}{e^{\tau}\cos(\tau x)}{\tau} = e^\tau\cos \tau x + x \int e^\tau \sen \tau x \,\,d\tau. 
+\end{align}
+Nuevamente, se realiza el proceso de integración por partes haciendo $u=\sen \tau x$ y $dv = e^\tau d\tau$, entonces
+\begin{align}
+\integral{}{}{e^{\tau}\cos(\tau x)}{\tau} &= e^\tau\cos \tau x + x\left( \sen \tau x \cdot e^\tau - x \int e^\tau \cos \tau x d\tau \right) \\ &= e^\tau\cos \tau x + x \sen \tau x \cdot e^\tau - x^2 \int e^\tau \cos \tau x d\tau \\
+\integral{}{}{e^{\tau}\cos(\tau x)}{\tau} + x^2 \integral{}{}{e^{\tau}\cos(\tau x)}{\tau} &= e^\tau\cos \tau x + x \sen \tau x \cdot e^\tau \\
+(1+x^2)\integral{}{}{e^{\tau}\cos(\tau x)}{\tau} &= e^\tau\cos \tau x + x \sen \tau x \cdot e^\tau \\
+\integral{}{}{e^{\tau}\cos(\tau x)}{\tau} &=\frac{e^\tau\cos \tau x + x \sen \tau x \cdot e^\tau}{1+x^2} \\
+\end{align}
+Finalmente, sustituyendo en la ecuación \ref{int2}, se tiene
+\begin{align}
+f_{X}(x) &= \frac{1}{\pi}  \left( \frac{e^\tau\cos \tau x + x \sen \tau x \cdot e^\tau}{1+x^2} \,\,\, \Big\lvert_{0}^{\infty} \right) \\ &=\frac{1}{\pi} \left( 0 - \frac{1}{1+x^2} \right) = \frac{1}{\pi(1+x^2)}
+\end{align}
+\end{proof}
+
+\begin{ej}[Ej. 10, pág. 402] 
+Sea $X_1, X_2, \ldots, X_n$ un proceso de ensayos independientes con densidad 
+\begin{equation}
+f(x)= \frac{1}{2}e^{-|x|}, \qquad \quad -\infty < x < \infty.
+\end{equation}
+\begin{enumerate}
+\item[(a)] Encuentra la media y la varianza de $f(x)$.
+\item[(b)] Encuentra la función generadora de momentos para $X_1, S_n, A_n$ y $S^*_n$.
+\item[(c)] ¿Qué puedes decir acerca de la función generadora de momentos de $S^*_n$ cuando $n\rightarrow \infty$?
+\item[(d)] ¿Qué puedes decir acerca de la función generadora de momentos de $A_n$ cuando $n\rightarrow \infty$?
+\end{enumerate}
+\end{ej}
+
+\begin{proof}[Solución]
+\textbf{(a)} Para encontrar la media y la varianza de $f(x)$, primero se calcula la función generadora de momentos de la variable aleatoria $X_1$. Por el teorema 10.4 \cite{snell}, se tiene la relación
+	\begin{equation}
+		k_X (\tau) = g_X (i \tau) = \int_{-\infty}^{\infty} e^{i \tau x} f_X (x) dx =\frac{1}{2} \int_{-\infty}^{\infty} e^{i \tau x} e^{-|x|} \, dx.
+	\end{equation}
+En el ejercicio 4, se resolvió una integral similar, cuyo valor encontrado es
+\begin{equation}
+\frac{1}{2\pi} \integral{-\infty}{\infty}{e^{-i\tau x} \cdot e^{-|\tau|}}{\tau} = \frac{1}{\pi(1+x^2)}
+\end{equation}
+Se le da la forma para obtener la integral deseada. Primero, se multiplica ambos lados por $2\pi$,
+\begin{align}
+\integral{-\infty}{\infty}{e^{-i\tau x} \cdot e^{-|\tau|}}{\tau} = \frac{2}{(1+x^2)},
+\end{align}
+después se cambia $x$ por $xi$, entonces
+\begin{align}
+ \integral{-\infty}{\infty}{e^{-i\tau (xi)} \cdot e^{-|\tau|}}{\tau} &= \frac{2}{(1+(xi)^2)} \\
+\integral{-\infty}{\infty}{e^{\tau x} \cdot e^{-|\tau|}}{\tau} &= \frac{2}{1-x^2} .
+\end{align}
+
+Cambiando $x$ por $t$ y $\tau$ por $x$, se tiene que  
+\begin{align}
+g_X(t) &= \frac{1}{2} \integral{-\infty}{\infty} {e^{tx} e^{-|x|}}{x}\\
+&= \frac{1}{2}\cdot \frac{2}{1-t^2} \\ &=\frac{1}{1-t^2}. 
+\end{align}
+Por lo tanto, la función generadora de momentos de $X_1$ es la función $g(t)=\frac{1}{1-t^2}$.
+
+La media se obtiene derivando la función generadora de momentos y evaluándola en $t=0$,
+	\begin{align}
+		g'_X(t) &= \frac{2t}{(1-t^2)^2} \\
+		g'_X(0) &= \frac{2\cdot 0}{(1-0^2)^2} = 0,
+	\end{align}
+para la varianza se hace lo mismo, pero en la segunda derivada,
+	\begin{align}
+	g''_X(t) &= \frac{2}{(1-t^2)^2} + \frac{8t^2}{(1-t^2)^3} \\
+	g''_X(0) &= \frac{2}{(1-0^2)^2} + \frac{8\cdot 0^2}{(1-0^2)^3} = 2. 
+	\end{align}
+
+Por lo tanto, la media es igual a 0 y la varianza es igual a 2.
+
+\textbf{(b)} La función generadora de momentos de $X_1$ se obtuvo en el inciso anterior, y es $g_X (t) = \frac{1}{1 - t^2}$. Entonces, se calcula la función generadora de momentos para $S_n,$ 
+	\begin{align}
+		g_{S_n} (t) = \esp{e^{S_n t}} &= \esp{e^{(X_1 + \dots + X_n) t}}\\
+				&= \esp{e^{X_1 t+ X_2 t + \cdots X_n t}}\\
+		&= \esp{e^{X_1 t} e^{X_2 t} \cdots e^{X_n t}} \\
+		&= \esp{e^{X_1 t}} \cdots \esp{e^{X_n t}} \\
+		&= g_{X_1} (t) \cdots g_{X_n} (t) \\
+		&= \left(\frac{1}{1-t^2}\right)^{n}.
+	\end{align}
+De forma similar, se obtiene la función generadora de momentos para $A_n = \frac{S_n}{n}$,  
+	\begin{align}
+		g_{A_n} (t) &= g_{ \frac{S_n}{n}}(t) \\
+		& = \esp{ e^{\frac{S_n}{n} t}} \\ &=  \esp{ e^{S_n \frac{t}{n}}}\\ &= g_{S_n} \left(\frac{t}{n}\right)\\
+		&= \left( \frac{1}{1-\left(\frac{t}{n}\right)^2} \right)^n.
+	\end{align}
+	Para encontrar la función generadora de momentos de $S_{n}^{*} = \frac{S_n - n\mu}{\sqrt{n \sigma^2}}$ se realiza un proceso similar que el anterior. Primero se sustituye la media y la varianza encontrada en el inciso \textbf{(a)}, por lo que se tiene 
+	\begin{equation}
+	S_{n}^{*}  = \frac{S_n}{\sqrt{2 n}}.
+	\end{equation}
+Entonces,
+	\begin{equation}
+		g_{S_{n}^{*}} (t) = g_{\frac{S_n}{\sqrt{2n}}} (t)=  g_{S_n} \left(\frac{t}{\sqrt{2n}}\right) =  \left( \frac{1}{1-\left(\frac{t}{\sqrt{2n}}\right)^2} \right)^n.
+	\end{equation}
+
+\textbf{(c)} Se calcula el límite de $g_{S^*_n}$ cuando $n\longrightarrow \infty$,
+\begin{equation}
+	\lim\limits_{n \longrightarrow \infty} g_{S^*_n} = \lim_{n \longrightarrow \infty} \left( \frac{1}{1-\left(\frac{t}{\sqrt{2n}}\right)^2} \right)^n = \frac{\lim\limits_{ n \longrightarrow \infty} 1^n}{\lim\limits_{n \longrightarrow \infty} \left(1-\left(\frac{t}{\sqrt{2n}}\right)^2\right)^n}.
+\end{equation}
+Se sabe que si una sucesión $(a_n)$ converge a $a$, entonces $(1 + \frac{a_n}{n})^n$ converge a $e^a$ \cite{Casella}. Entonces,
+\begin{equation}
+	\lim\limits_{n \longrightarrow \infty} \left(1-\left(\frac{t}{\sqrt{2n}}\right)^2\right)^n = \lim\limits_{n \longrightarrow \infty} \left(1+\left(\frac{\frac{-t^2}{2}}{n}\right)\right)^n =e^{\frac{-t^2}{2}}.
+\end{equation}
+Sustituyendo, el límite resulta
+\begin{equation}
+	\lim\limits_{n\longrightarrow \infty} g_{S^*_n} = \lim\limits_{n \longrightarrow \infty} \left( \frac{1}{1-\left(\frac{t}{\sqrt{2n}}\right)^2} \right)^n = \frac{\lim\limits_{n \longrightarrow \infty} 1^n}{\lim\limits_{n \longrightarrow \infty} \left(1-\left(\frac{t}{\sqrt{2n}}\right)^2\right)^n} = \frac{1}{e^{\frac{-t^2}{2}}} = e^{\frac{t^2}{2}}.
+\end{equation}
+\textbf{(d)} De forma similiar, se calcula
+	\begin{equation}
+		\lim\limits_{n \longrightarrow \infty} g_{A_n} =\lim_{n \longrightarrow \infty}  \left( \frac{1}{1-\left(\frac{t}{n}\right)^2} \right)^n = \frac{\lim\limits_{n \longrightarrow \infty} 1^n}{\lim\limits_{n \longrightarrow \infty} \left( 1-\left(\frac{t}{n}\right)^2 \right)^n},
+	\end{equation}
+	donde, 
+\begin{equation}
+	1-\left(\frac{t}{n}\right)^2 = 1 + \left( \frac{-t^2}{n^2}\right) = 1 + \frac{\frac{-t^2}{n}}{n}.
+\end{equation}
+La sucesión $a_n = \frac{-t^2}{n}$ converge a 0, así que 
+\begin{equation}
+	\lim\limits_{n \longrightarrow \infty} \left( 1-\left(\frac{t}{n}\right)^2 \right)^n = e^0 = 1,
+\end{equation}
+Por lo tanto, se tiene que
+\begin{equation}
+	\lim\limits_{n \longrightarrow \infty}  \left( \frac{1}{1-\left(\frac{t}{n}\right)^2} \right)^n = 1.
+\end{equation}
+\end{proof}
+
+
+
+\bibliographystyle{plain} 
+\bibliography{ref}
+
+
+\end{document} 

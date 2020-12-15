@@ -1,0 +1,103 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=blue,
+     citecolor = blue,      
+     urlcolor=cyan,
+     }
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+
+\newcommand\var[1]{\, \mathrm{Var}\left\lbrack #1 \right\rbrack}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left\lbrack #1 \right\rbrack}
+\newcommand\pr[1]{\, P \left( #1 \right)}
+
+\newcommand\esp[1]{\, \mathbb{E} \left\lbrack #1 \right\rbrack}
+\newcommand\integral[4]{\ensuremath{\int_{#1}^{#2} #3 \, d#4}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=R,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+
+\usepackage{graphicx}
+\usepackage[inner=1.5 cm, outer = 1.5 cm, top=1 cm, bottom = 1.5 cm]{geometry}
+\setlength{\parskip}{3mm}
+\title{\textsc{Retroalimentación de propuestas para el proyecto}}
+\author{\textsc{Fabiola Vázquez}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\lstlistingname}{Código}
+\floatname{algorithm}{Algoritmo}
+\newtheorem{ej}{Ejercicio}
+\newtheorem{defi}{Definición}
+\newtheorem{teo}{Teorema}
+
+
+
+\begin{document}
+\maketitle
+\hrule 
+
+\section{Gerardo}
+\textit{The modeling of infectious diseases is of upmost importance, as can be appreciated greatly these days. In this project, we pretend to study the stochastic spread of a contagion process. Questions that can be addressed by these studies include: What is the probability of a major outbreak? How long is the disease likely to persist?. Both theoretical and computational results are to be presented in an attempt to bring light to these questions.}
+
+Quizá sería de provecho, dada la situación actual, intentar empatar los resultados que obtengas con datos sobre epidemias existentes.  También sugeriría incorporar técnicas de control del contagio, como el uso de vacunas o distanciamiento social.
+\section{Gabriela}
+\textit{Efectos del covid en educación: debido a la contingencia sanitaria que atravesamos a causa del coronavirus diversas actividades han tenido que ser suspendidas o modificar la forma en que se llevan a cabo. Tal es el caso de la educación en línea. Me gustaría analizar el efecto que ha tenido la contingencia sanitaria en la educación principalmente en el estado de Michoacán.}
+
+Es un tema de interés con el cual se podría identificar áreas de oportunidad para los siguientes ciclos escolares. Como sugerencia, quizá hacer alguna comparación con algún otro estado para poder comparar algunos otros aspectos.
+
+\section{Joaquín}
+\textit{En este año se ha presentado la pandemia del Covid-19 en México, que ha causado la muerte de 114,000 personas hasta el momento. Algunos medios de comunicación y el público en general, afirman que el número de muertos es mayor, por eso existe la necesidad de tener una manera de estimar el número de muertos que se dan en México anualmente.
+Usando los datos de mortalidad de los últimos 25 años en México, se pretende ajustar dos o más distribuciones de probabilidad para estimar el número de muertes esperado en 2020, y poder calcular exceso de muertes por Covid-19 no registradas.}
+
+El proyecto se ve bastante bueno. Puedes también comparar esto con el exceso de mortalidad reportado en otros países, o si consigues los datos necesarios, estimar tú mismo este cálculo para otros países.
+\end{document} 

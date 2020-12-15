@@ -1,0 +1,104 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=blue,
+     filecolor=blue,
+     citecolor = blue,      
+     urlcolor=cyan,
+     }
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+
+\newcommand\var[1]{\, \mathrm{Var}\left\lbrack #1 \right\rbrack}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left\lbrack #1 \right\rbrack}
+\newcommand\pr[1]{\, P \left( #1 \right)}
+
+\newcommand\esp[1]{\, \mathbb{E} \left\lbrack #1 \right\rbrack}
+\newcommand\integral[4]{\ensuremath{\int_{#1}^{#2} #3 \, d#4}}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=R,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+
+\usepackage{graphicx}
+\usepackage[inner=1.5 cm, outer = 1.5 cm, top=1 cm, bottom = 1.5 cm]{geometry}
+\setlength{\parskip}{3mm}
+\title{\textsc{Propuestas para el proyecto}}
+\author{\textsc{Fabiola Vázquez}}
+
+\setlength{\parindent}{0cm}
+\renewcommand{\lstlistingname}{Código}
+\floatname{algorithm}{Algoritmo}
+\newtheorem{ej}{Ejercicio}
+\newtheorem{defi}{Definición}
+\newtheorem{teo}{Teorema}
+
+
+
+\begin{document}
+\maketitle
+\hrule 
+\section{Introducción}
+El fin del presente trabajo es presentar posibles temas para el proyecto final del curso Modelos Probabilistas Aplicados. Cada sección tiene un pequeño resumen de estos temas.
+
+\section{Sistemas multiagente en la simulación de epidemias}
+El modelado de epidemias es un tema de importancia científica, no solo en el área de salud pública, si no en distintas disciplinas con fenómenos análogos, como la propagación de rumores o de virus informáticos. Una de las técnicas existentes para estudiar estos procesos es la simulación de epidemias como un sistema multiagente \cite{multiagent}.  Estos sistemas tienen componentes probabilistas, como el contacto aleatorio entre agentes o el contagio aleatorio (i.e., una vez teniendo contacto un agente infeccioso con uno susceptible, la infección ocurre con cierta probabilidad). Se pueden añadir componentes aleatorios adicionales, como la aplicación de una vacuna con cierta probabilidad de efectividad. En este trabajo, se plantea un estudio de estos modelos y de sus componentes tanto teóricas como de simulación computacional. Se pueden comparar sus resultados con la propagación de alguna epidemia conocida.
+
+\section{Redes autómatas en epidemias}
+Estos modelos se han usado para modelar epidemias \cite{Boccara_1994}. En el presente, buscamos estudiar el comportamiento de un sistema de contagios vía estos métodos, en contraste con los modelos multiagente mencionados previamente.
+
+\section{Caminatas aleatorias en el sector financiero}
+Las fluctuaciones de precios en los mercados de valores, no corresponden a modelos deterministas. El uso de caminatas aleatorias ha sido usado para tratar de entender y modelar estos fenómenos \cite{randomwalks}. Este proyecto se centraría en usar modelos de caminatas aleatorias para tratar de modelar las variaciones reales de precios en un mercado de acciones.
+
+\section{Red bayesiana}
+El concepto de red bayesiana \cite{network} combina dos áreas de las matemáticas: teoría de grafos y probabilidad. La red bayesiana es un modelo probabilístico en un grafo dirigido sin ciclos cuyos nodos representan variables aleatorias y las aristas representan las dependencias entre ellas. Existen diversas aplicaciones en las áreas de biología computacional, medicina, procesamiento de imágenes y la economía \cite{bnet}, siendo esta última el área de interés para el desarrollo del proyecto.
+\bibliographystyle{plain}
+\bibliography{ref}
+\end{document} 
